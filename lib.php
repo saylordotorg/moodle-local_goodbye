@@ -16,6 +16,17 @@
 
 
 /**
+ * Sayonara
+ *
+ * This fork of Goodbye is designed to work with Moodle 3.2+ and the Boost theme.
+ * The option to delete will be in the user's profile.
+ *
+ * @package    local
+ * @subpackage sayonara
+ * @copyright  2017 Saylor Academy
+ * @author     John Azinheira
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ *
  * Goodbye
  *
  * This module has been created to provide users the option to delete their account
@@ -26,19 +37,19 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-function local_goodbye_extend_navigation(global_navigation $navigation) {
+function local_sayonara_extend_navigation(global_navigation $navigation) {
     global $USER;
 
     if (!isloggedin() || isguestuser() && !is_siteadmin()) {
         return '';
     }
-    $enabled = get_config('local_goodbye', 'enabled');
+    $enabled = get_config('local_sayonara', 'enabled');
 
     if ($enabled && ($USER->auth == 'email' || $USER->auth == 'manual')) {
 
         $container2 = $navigation->get('myprofile');
         if (!empty($container2)) {
-            $container2->add(get_string('manageaccount', 'local_goodbye'), new moodle_url('/local/goodbye/index.php'));
+            $container2->add(get_string('manageaccount', 'local_sayonara'), new moodle_url('/local/sayonara/index.php'));
         }
     }
 }

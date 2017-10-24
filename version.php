@@ -15,6 +15,17 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Sayonara
+ *
+ * This fork of Goodbye is designed to work with Moodle 3.2+ and the Boost theme.
+ * The option to delete will be in the user's profile.
+ *
+ * @package    local
+ * @subpackage sayonara
+ * @copyright  2017 Saylor Academy
+ * @author     John Azinheira
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ *
  * Goodbye
  *
  * This module has been created to provide users the option to delete their account
@@ -25,8 +36,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$plugin->version  = 2013092204;
-$plugin->requires = 2011033010;
-$plugin->release = '1.0 (Build: 2013071500)';
-$plugin->maturity = MATURITY_STABLE;
-$plugin->component = 'local_goodbye';
+$plugin->version  = 2017102400;
+$plugin->requires = 2016120500;
+$plugin->release = '1.0.1';
+$plugin->maturity = MATURITY_BETA;
+$plugin->component = 'local_sayonara';

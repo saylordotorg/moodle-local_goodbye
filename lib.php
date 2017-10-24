@@ -37,7 +37,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-function local_goodbye_extend_navigation(global_navigation $navigation) {
+function local_sayonara_extend_navigation(global_navigation $navigation) {
     global $USER;
 
     if (!isloggedin() || isguestuser() && !is_siteadmin()) {

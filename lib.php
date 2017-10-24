@@ -37,6 +37,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 function local_sayonara_extend_navigation(global_navigation $navigation) {
     global $USER;
 
@@ -52,4 +54,38 @@ function local_sayonara_extend_navigation(global_navigation $navigation) {
             $container2->add(get_string('manageaccount', 'local_sayonara'), new moodle_url('/local/sayonara/index.php'));
         }
     }
+}
+
+/**
+ * Add nodes to myprofile page.
+ *
+ * @param \core_user\output\myprofile\tree $tree Tree object
+ * @param stdClass $user user object
+ * @param bool $iscurrentuser
+ * @param stdClass $course Course object
+ *
+ * @return bool
+ */
+function local_sayonara_myprofile_navigation(core_user\output\myprofile\tree $tree, $user, $iscurrentuser, $course) {
+    global $PAGE, $USER;
+
+    $enabled = get_config('local_sayonara', 'enabled');
+    $systemcontext = context_system::instance();
+    $title = get_string('manageaccount', 'local_sayonara');
+    $url = new moodle_url('/local/sayonara/index.php');
+
+    // Should be the same capability checks as editing your own profile in myprofile lib.
+    if ((isloggedin() && !isguestuser($user) && !is_mnet_remote_user($user)) && $iscurrentuser && has_capability('moodle/user:editownprofile', $systemcontext)) {
+        // Only show deletion option if the plugin is enabled and user auth is email or manual.
+        if ($enabled && ($USER->auth == 'email' || $USER->auth == 'manual')) {
+
+            $node = new core_user\output\myprofile\node('miscellaneous', 'sayonara', $title, null,
+                $url);
+            $tree->add_node($node);
+
+            return true;
+        }
+    }
+
+    return false;
 }

@@ -37,7 +37,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'Au revoir';
+$string['pluginname'] = 'Sayonara';
 $string['enabled'] = 'Activé';
 $string['enabled_desc'] = 'Permet aux utilisateurs de supprimer leur compte';
 $string['myaccount'] = 'Mon Compte';

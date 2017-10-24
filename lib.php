@@ -43,13 +43,13 @@ function local_goodbye_extend_navigation(global_navigation $navigation) {
     if (!isloggedin() || isguestuser() && !is_siteadmin()) {
         return '';
     }
-    $enabled = get_config('local_goodbye', 'enabled');
+    $enabled = get_config('local_sayonara', 'enabled');
 
     if ($enabled && ($USER->auth == 'email' || $USER->auth == 'manual')) {
 
         $container2 = $navigation->get('myprofile');
         if (!empty($container2)) {
-            $container2->add(get_string('manageaccount', 'local_goodbye'), new moodle_url('/local/goodbye/index.php'));
+            $container2->add(get_string('manageaccount', 'local_sayonara'), new moodle_url('/local/sayonara/index.php'));
         }
     }
 }

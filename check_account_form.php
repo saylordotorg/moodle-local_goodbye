@@ -49,11 +49,11 @@ class check_account_form extends moodleform {
         $userid = $USER->id;
         $strrequired = get_string('required');
 
-        $farewell = get_config('local_goodbye', 'farewell');
+        $farewell = get_config('local_sayonara', 'farewell');
         if (empty($farewell)) {
-            $farewell = get_string('defaultfarewell', 'local_goodbye');
+            $farewell = get_string('defaultfarewell', 'local_sayonara');
         }
-        $mform->addElement('static', 'farewell', '', get_config('local_goodbye', 'farewell'));
+        $mform->addElement('static', 'farewell', '', get_config('local_sayonara', 'farewell'));
 
         $mform->addElement('text', 'username', get_string('username'));
         $mform->setType('username', PARAM_TEXT);

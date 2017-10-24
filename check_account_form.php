@@ -15,12 +15,23 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Quick Course Login
+ * Sayonara
  *
- * This module has been created to provide a quick and easy way of loggin into a course
+ * This fork of Goodbye is designed to work with Moodle 3.2+ and the Boost theme.
+ * The option to delete will be in the user's profile.
  *
  * @package    local
- * @subpackage quickcourselogin
+ * @subpackage sayonara
+ * @copyright  2017 Saylor Academy
+ * @author     John Azinheira
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ *
+ * Goodbye
+ *
+ * This module has been created to provide users the option to delete their account
+ *
+ * @package    local
+ * @subpackage goodbye, delete your moodle account
  * @copyright  2013 Bas Brands, www.basbrands.nl
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

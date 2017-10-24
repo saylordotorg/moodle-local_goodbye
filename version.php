@@ -37,7 +37,7 @@
  */
 
 $plugin->version  = 2013092204;
-$plugin->requires = 2011033010;
 $plugin->release = '1.0 (Build: 2013071500)';
 $plugin->maturity = MATURITY_STABLE;
+$plugin->requires = 2016120500;
 $plugin->component = 'local_sayonara';

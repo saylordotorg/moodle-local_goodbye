@@ -55,7 +55,7 @@ function local_sayonara_myprofile_navigation(core_user\output\myprofile\tree $tr
     $enabled = get_config('local_sayonara', 'enabled');
     $systemcontext = context_system::instance();
     $title = get_string('manageaccount', 'local_sayonara');
-    $url = new moodle_url('/local/sayonara/index.php');
+    $url = new moodle_url('/local/sayonara/index.php', array('sesskey'=>sesskey()));
 
     // Should be the same capability checks as editing your own profile in myprofile lib.
     if ((isloggedin() && !isguestuser($user) && !is_mnet_remote_user($user)) && $iscurrentuser && has_capability('moodle/user:editownprofile', $systemcontext)) {

@@ -39,23 +39,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-function local_sayonara_extend_navigation(global_navigation $navigation) {
-    global $USER;
-
-    if (!isloggedin() || isguestuser() && !is_siteadmin()) {
-        return '';
-    }
-    $enabled = get_config('local_sayonara', 'enabled');
-
-    if ($enabled && ($USER->auth == 'email' || $USER->auth == 'manual')) {
-
-        $container2 = $navigation->get('myprofile');
-        if (!empty($container2)) {
-            $container2->add(get_string('manageaccount', 'local_sayonara'), new moodle_url('/local/sayonara/index.php'));
-        }
-    }
-}
-
 /**
  * Add nodes to myprofile page.
  *

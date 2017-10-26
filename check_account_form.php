@@ -43,7 +43,7 @@ require_once($CFG->libdir . '/formslib.php');
 class check_account_form extends moodleform {
 
     public function definition() {
-        global $USER, $CFG, $COURSE;
+        global $CFG, $USER;
 
         $mform = $this->_form;
         $mform->disable_form_change_checker();

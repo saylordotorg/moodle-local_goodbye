@@ -15,6 +15,17 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Sayonara
+ *
+ * This fork of Goodbye is designed to work with Moodle 3.2+ and the Boost theme.
+ * The option to delete will be in the user's profile.
+ *
+ * @package    local
+ * @subpackage sayonara
+ * @copyright  2017 Saylor Academy
+ * @author     John Azinheira
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ *
  * Goodbye
  *
  * This module has been created to provide users the option to delete their account
@@ -27,60 +38,76 @@
 
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
 require_once(dirname(__FILE__).'/lib.php');
-require_once($CFG->dirroot . '/local/goodbye/check_account_form.php');
+require_once($CFG->dirroot . '/local/sayonara/check_account_form.php');
 
 $PAGE->set_context(context_system::instance());
-$PAGE->set_url('/local/goodbye/index.php');
-$PAGE->set_title(format_string(get_string('deleteaccount', 'local_goodbye')));
-$PAGE->set_heading(format_string(get_string('userpass', 'local_goodbye')));
-$enabled = get_config('local_goodbye', 'enabled');
+$PAGE->set_url('/local/sayonara/index.php');
+$PAGE->set_title(format_string(get_string('deleteaccount', 'local_sayonara')));
+$PAGE->set_heading(format_string(get_string('userpass', 'local_sayonara')));
 
-require_login();
+$confirm      = optional_param('confirm', '', PARAM_ALPHANUM);   //md5 confirmation hash
 
-if ($enabled && !is_siteadmin() && !isguestuser()) {
-    $checkaccount = new check_account_form();
+global $USER;
 
-    global $USER;
+$systemcontext = context_system::instance();
+$enabled = get_config('local_sayonara', 'enabled');
+$error = '';
 
-    $error = '';
+if ($enabled) {
+    if (isloggedin() && !isguestuser($USER) && !is_mnet_remote_user($USER) && confirm_sesskey()) {
+        require_capability('moodle/user:editownprofile', $systemcontext);
+        $url = new moodle_url('/local/sayonara/index.php', array('sesskey'=>$USER->sesskey));
+        $checkaccount = new check_account_form($url);
 
-    if ($local_user = $checkaccount->get_data()) {
-        if ($local_user->username != '' && $local_user->password != '') {
-            if ($user = $DB->get_record('user', array('username'=>$local_user->username))) {
-                // User Exists, Check pass.
-                if ($user = authenticate_user_login($local_user->username, $local_user->password) ) {
-                    complete_user_login($user);
-                    if ($user->id == $USER->id && ($USER->auth == 'email' || $USER->auth == 'manual')) {
-                        delete_user($user);
-
-                        $authsequence = get_enabled_auth_plugins(); // auths, in sequence
-                        foreach($authsequence as $authname) {
-                            $authplugin = get_auth_plugin($authname);
-                            $authplugin->logoutpage_hook();
-                        }
-
-                        require_logout();
-                        echo $OUTPUT->header(get_string('deleteaccount', 'local_goodbye'));
-                        echo $OUTPUT->notification(get_string('useraccountdeleted', 'local_goodbye'), 'notifysuccess');
-                        echo $OUTPUT->footer();
-                        exit;
-                    } else {
-                        $error = get_string('noself', 'local_goodbye');
-                    }
-                } else {
-                    $error = get_string('loginerror', 'local_goodbye');
-                }
+        if ($confirm == md5($USER->sesskey) && data_submitted()) {
+            $user = $DB->get_record('user', array('id'=>$USER->id), '*', MUST_EXIST);
+            if (is_siteadmin($user->id)) {
+                $error = $OUTPUT->notification(get_string('useradminnodelete', 'local_sayonara'));
+            } else if (local_sayonara_delete_user($user)) {
+                echo $OUTPUT->header(get_string('deleteaccount', 'local_sayonara'));
+                echo $OUTPUT->notification(get_string('useraccountdeleted', 'local_sayonara'), 'notifysuccess');
+                echo $OUTPUT->footer();
+                exit;
             } else {
-                $error = get_string('loginerror', 'local_goodbye');
+                $error = $OUTPUT->notification(get_string('deleteaccounterror', 'local_sayonara'));
             }
         }
-    }
+        if ($local_user = $checkaccount->get_data()) {
+            if ($local_user->username != '' && $local_user->password != '') {
+                if ($user = authenticate_user_login($local_user->username, $local_user->password)) {
+                    // User Exists, Check pass.
+                    if ($user->id == $USER->id) { // User credentials authenticating with MUST match the credentials they are already logged in with.
+                        if ($user->id == $USER->id && ($USER->auth == 'email' || $USER->auth == 'manual')) {
+                            $optionsyes = array('confirm'=>md5($USER->sesskey), 'sesskey'=>$USER->sesskey);
+                            $deleteurl = new moodle_url($url, $optionsyes);
+                            $deletebutton = new single_button($deleteurl, get_string('delete'), 'post');
+                            $returnurl = new moodle_url('/user/profile.php', array('id'=>$USER->id));
 
-    echo $OUTPUT->header(get_string('deleteaccount', 'local_goodbye'));
-    $checkaccount->display();
-    echo $error;
+                            echo $OUTPUT->header();
+                            echo $OUTPUT->confirm(get_config('local_sayonara', 'farewellconfirmation'), $deletebutton, $returnurl);
+                            echo $OUTPUT->footer();
+                            die;
+                        } else {
+                            $error = $OUTPUT->notification(get_string('noself', 'local_sayonara'));
+                        }
+                    } else {
+                        $error = $OUTPUT->notification(get_string('loginerror', 'local_sayonara'));
+                    }
+                } else {
+                    $error = $OUTPUT->notification(get_string('loginerror', 'local_sayonara'));
+                }
+            }
+        }
+
+        echo $OUTPUT->header(get_string('deleteaccount', 'local_sayonara'));
+        echo $error;
+        $checkaccount->display();
+    } else {
+        echo $OUTPUT->header(get_string('loginsessionerror', 'local_sayonara'));
+        echo $OUTPUT->notification(get_string('loginsessionerror', 'local_sayonara'));
+    }
 } else {
-    echo $OUTPUT->header(get_string('disabled', 'local_goodbye'));
+    echo $OUTPUT->header(get_string('disabled', 'local_sayonara'));
 }
 
 echo $OUTPUT->footer();

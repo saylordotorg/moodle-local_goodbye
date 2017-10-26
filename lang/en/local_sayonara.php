@@ -16,27 +16,44 @@
 
 
 /**
- * Local Redirect
+ * Sayonara
  *
- * This local plugin enrols and redirects users to a pre-configured course after login
+ * This fork of Goodbye is designed to work with Moodle 3.2+ and the Boost theme.
+ * The option to delete will be in the user's profile.
  *
  * @package    local
- * @subpackage local_goodbye
+ * @subpackage sayonara
+ * @copyright  2017 Saylor Academy
+ * @author     John Azinheira
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ *
+ * Goodbye
+ *
+ * This module has been created to provide users the option to delete their account
+ *
+ * @package    local
+ * @subpackage goodbye, delete your moodle account
  * @copyright  2013 Bas Brands, www.basbrands.nl
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'Goodbye';
+$string['pluginname'] = 'Sayonara';
 $string['enabled'] = 'Enabled';
 $string['enabled_desc'] = 'Enable users deleting their accounts';
 $string['myaccount'] = 'My Account';
 $string['manageaccount'] = 'Delete my account';
 $string['loginerror'] = 'Invalid username or password';
+$string['loginsessionerror'] = 'There was an error authenticating your session.';
 $string['deleteaccount'] = 'Delete your account';
+$string['deleteaccounterror'] = 'There was an error deleting your account.';
 $string['userpass'] = 'Enter your username and password';
 $string['noself'] = 'We are sorry, only self registration accounts are allowed to delete their account';
 $string['disabled'] = 'Account removal disabled';
-$string['farewell'] = 'Goodby text';
+$string['farewell'] = 'Farewell text';
 $string['farewell_desc'] = 'Text shown on delete account form';
 $string['defaultfarewell'] = 'To delete your account please enter your username and password. <br>Thank you for using Moodle!';
+$string['farewellconfirmation'] = 'Farewell confirmation text';
+$string['farewellconfirmation_desc'] = 'Text shown on delete account confirmation';
+$string['defaultfarewellconfirmation'] = 'Are you sure you wish to delete your account?';
 $string['useraccountdeleted'] = 'Your account has been deleted from this site.';
+$string['useradminnodelete'] = 'Unable to delete an administrator\'s account.';

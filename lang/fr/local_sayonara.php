@@ -16,17 +16,28 @@
 
 
 /**
- * Local Redirect
+ * Sayonara
  *
- * This local plugin enrols and redirects users to a pre-configured course after login
+ * This fork of Goodbye is designed to work with Moodle 3.2+ and the Boost theme.
+ * The option to delete will be in the user's profile.
  *
  * @package    local
- * @subpackage local_goodbye
+ * @subpackage sayonara
+ * @copyright  2017 Saylor Academy
+ * @author     John Azinheira
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ *
+ * Goodbye
+ *
+ * This module has been created to provide users the option to delete their account
+ *
+ * @package    local
+ * @subpackage goodbye, delete your moodle account
  * @copyright  2013 Bas Brands, www.basbrands.nl
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'Au revoir';
+$string['pluginname'] = 'Sayonara';
 $string['enabled'] = 'Activé';
 $string['enabled_desc'] = 'Permet aux utilisateurs de supprimer leur compte';
 $string['myaccount'] = 'Mon Compte';

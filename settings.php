@@ -16,6 +16,17 @@
 
 
 /**
+ * Sayonara
+ *
+ * This fork of Goodbye is designed to work with Moodle 3.2+ and the Boost theme.
+ * The option to delete will be in the user's profile.
+ *
+ * @package    local
+ * @subpackage sayonara
+ * @copyright  2017 Saylor Academy
+ * @author     John Azinheira
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ *
  * Goodbye
  *
  * This module has been created to provide users the option to delete their account
@@ -34,19 +45,25 @@ if ($hassiteconfig) {
     $moderator = get_admin();
     $site = get_site();
 
-    $settings = new admin_settingpage('local_goodbye', get_string('pluginname', 'local_goodbye'));
+    $settings = new admin_settingpage('local_sayonara', get_string('pluginname', 'local_sayonara'));
     $ADMIN->add('localplugins', $settings);
 
-    $name = 'local_goodbye/enabled';
-    $title = get_string('enabled', 'local_goodbye');
-    $description = get_string('enabled_desc', 'local_goodbye');
+    $name = 'local_sayonara/enabled';
+    $title = get_string('enabled', 'local_sayonara');
+    $description = get_string('enabled_desc', 'local_sayonara');
     $setting = new admin_setting_configcheckbox($name, $title, $description, 0);
     $settings->add($setting);
 
-    $name = 'local_goodbye/farewell';
-    $title = get_string('farewell', 'local_goodbye');
-    $description = get_string('farewell_desc', 'local_goodbye');
-    $setting = new admin_setting_confightmleditor($name, $title, $description, get_string('defaultfarewell', 'local_goodbye'));
+    $name = 'local_sayonara/farewell';
+    $title = get_string('farewell', 'local_sayonara');
+    $description = get_string('farewell_desc', 'local_sayonara');
+    $setting = new admin_setting_confightmleditor($name, $title, $description, get_string('defaultfarewell', 'local_sayonara'));
+    $settings->add($setting);
+
+    $name = 'local_sayonara/farewellconfirmation';
+    $title = get_string('farewellconfirmation', 'local_sayonara');
+    $description = get_string('farewellconfirmation_desc', 'local_sayonara');
+    $setting = new admin_setting_confightmleditor($name, $title, $description, get_string('defaultfarewellconfirmation', 'local_sayonara'));
     $settings->add($setting);
 }
 

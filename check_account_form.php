@@ -15,12 +15,23 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Quick Course Login
+ * Sayonara
  *
- * This module has been created to provide a quick and easy way of loggin into a course
+ * This fork of Goodbye is designed to work with Moodle 3.2+ and the Boost theme.
+ * The option to delete will be in the user's profile.
  *
  * @package    local
- * @subpackage quickcourselogin
+ * @subpackage sayonara
+ * @copyright  2017 Saylor Academy
+ * @author     John Azinheira
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ *
+ * Goodbye
+ *
+ * This module has been created to provide users the option to delete their account
+ *
+ * @package    local
+ * @subpackage goodbye, delete your moodle account
  * @copyright  2013 Bas Brands, www.basbrands.nl
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -32,19 +43,28 @@ require_once($CFG->libdir . '/formslib.php');
 class check_account_form extends moodleform {
 
     public function definition() {
-        global $USER, $CFG, $COURSE;
+        global $CFG, $USER;
+
+        $canloginbyemail = !empty($CFG->authloginviaemail);
 
         $mform = $this->_form;
+        $mform->disable_form_change_checker();
+
         $userid = $USER->id;
         $strrequired = get_string('required');
 
-        $farewell = get_config('local_goodbye', 'farewell');
+        $farewell = get_config('local_sayonara', 'farewell');
         if (empty($farewell)) {
-            $farewell = get_string('defaultfarewell', 'local_goodbye');
+            $farewell = get_string('defaultfarewell', 'local_sayonara');
         }
-        $mform->addElement('static', 'farewell', '', get_config('local_goodbye', 'farewell'));
+        $mform->addElement('static', 'farewell', '', get_config('local_sayonara', 'farewell'));
 
-        $mform->addElement('text', 'username', get_string('username'));
+        if($canloginbyemail) {
+            $mform->addElement('text', 'username', get_string('usernameemail'));
+        } else {
+            $mform->addElement('text', 'username', get_string('username'));
+        }
+
         $mform->setType('username', PARAM_TEXT);
         $mform->addRule('username', $strrequired, 'required', null, 'client');
 

@@ -53,8 +53,6 @@ $systemcontext = context_system::instance();
 $enabled = get_config('local_sayonara', 'enabled');
 $error = '';
 
-$canloginbyemail = !empty($CFG->authloginviaemail);
-
 if ($enabled) {
     if (isloggedin() && !isguestuser($USER) && !is_mnet_remote_user($USER) && confirm_sesskey()) {
         require_capability('moodle/user:editownprofile', $systemcontext);

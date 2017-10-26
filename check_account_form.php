@@ -45,6 +45,8 @@ class check_account_form extends moodleform {
     public function definition() {
         global $CFG, $USER;
 
+        $canloginbyemail = !empty($CFG->authloginviaemail);
+
         $mform = $this->_form;
         $mform->disable_form_change_checker();
 
@@ -57,7 +59,12 @@ class check_account_form extends moodleform {
         }
         $mform->addElement('static', 'farewell', '', get_config('local_sayonara', 'farewell'));
 
-        $mform->addElement('text', 'username', get_string('username'));
+        if($canloginbyemail) {
+            $mform->addElement('text', 'username', get_string('usernameemail'));
+        } else {
+            $mform->addElement('text', 'username', get_string('username'));
+        }
+
         $mform->setType('username', PARAM_TEXT);
         $mform->addRule('username', $strrequired, 'required', null, 'client');
 
